@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hidden Gems in Jordan</title>
+<style>
+body { font-family: Arial,sans-serif; margin:0; background:#f0f0f0; position:relative; overflow-x:hidden; transition: all 0.5s;}
+body.dark-mode { background:#111; color:#eee;}
+h1,h2,p{text-align:center; margin:10px; transition: all 0.5s;}
+.box, .section, .place, .tab-content, .quiz-result { 
+  background: rgba(255,255,255,0.95); 
+  padding:20px; margin:20px auto; 
+  border-radius:10px; max-width:800px; 
+  box-shadow:0 4px 10px rgba(0,0,0,0.3); 
+  position:relative; z-index:1;
+  transition: all 0.5s;
+}
+body.dark-mode .box, body.dark-mode .section, body.dark-mode .place, body.dark-mode .tab-content { background: rgba(20,20,20,0.95); color:#eee;}
+img { width:100%; max-height:300px; object-fit:cover; border-radius:6px; margin:10px 0;}
+input, select, textarea, button { width:100%; padding:8px; margin:5px 0; border-radius:5px; border:1px solid #ccc; transition: all 0.5s;}
+body.dark-mode input, body.dark-mode select, body.dark-mode textarea { background:#222; color:#eee; border:1px solid #555;}
+button { background:#0077b6; color:white; border:none; cursor:pointer;}
+button:hover { background:#023e8a; }
+body.dark-mode button { background:#bb86fc; color:#111; }
+body.dark-mode button:hover { background:#3700b3; }
+
+.hidden { display:none; }
+.nav-btns { text-align:center; margin:10px; }
+.nav-btns button { width:auto;margin:5px; }
+
+/* Tabs */
+.tabs { display:flex; justify-content:center; flex-wrap:wrap; }
+.tabs button { flex:1; max-width:180px; margin:5px; background:#ffb703; color:#023e8a; font-weight:bold; }
+.tabs button.active { background:#fb8500; color:white; }
+
+/* About page decoration */
+.decorative { position:absolute; border-radius:50%; opacity:0.2; z-index:0; transition: all 0.5s;}
+.decorative1 { width:100px; height:100px; background:#ffb703; top:50px; left:30px; animation: float 6s infinite alternate; }
+.decorative2 { width:150px; height:150px; background:#023e8a; bottom:60px; right:40px; animation: float 8s infinite alternate; }
+@keyframes float { transform: translateY(-10px); }
+
+/* Waterfall greetings */
+.person { position:absolute; width:50px; height:50px; background: rgba(255,0,0,0.6); border-radius:50%; text-align:center; color:white; font-weight:bold; line-height:50px; font-size:14px; pointer-events:none; z-index:10; animation-timing-function: linear;}
+@keyframes fallLeft {0% { top: -50px; } 100% { top: calc(100vh - 60px); }}
+@keyframes fallRight {0% { top: -50px; } 100% { top: calc(100vh - 60px); }}
+
+/* Badge/collectible stars */
+.badge { font-size:20px; cursor:pointer; color:#ccc; margin-left:5px; transition: all 0.3s; }
+.badge.collected { color:#ffd700; transform: scale(1.3); }
+
+/* Comments wall */
+#commentsWall { 
+  position:relative; 
+  width:90%; 
+  height:400px; 
+  margin:20px auto; 
+  background:#e0e0e0; 
+  border:2px solid #ccc; 
+  border-radius:10px; 
+  overflow:hidden; 
+  display:flex; flex-wrap:wrap; align-content:flex-start;
+  padding:10px;
+  transition: all 0.5s;
+}
+body.dark-mode #commentsWall { background:#222; border:2px solid #555; }
+.commentBrick {
+  background:#ffb703;
+  color:#023e8a;
+  padding:5px 10px;
+  margin:5px;
+  border-radius:5px;
+  font-size:14px;
+  animation: jumpUp 0.6s ease forwards;
+}
+body.dark-mode .commentBrick { background:#bb86fc; color:#111; }
+@keyframes jumpUp { 0% { transform: translateY(100%); opacity:0; } 50% { transform: translateY(-20px); opacity:1; } 100% { transform: translateY(0); } }
+
+/* Mini Game */
+#miniGame { position:relative; width:90%; height:300px; margin:20px auto; background:#e8f5ff; border:2px solid #0077b6; border-radius:10px; overflow:hidden; }
+body.dark-mode #miniGame { background:#222; border:2px solid #bb86fc; }
+.gemIcon { position:absolute; font-size:24px; cursor:pointer; color:#ffb703; transition: transform 0.2s; }
+.gemIcon:active { transform: scale(1.5); }
+
+/* Achievement flying badge */
+@keyframes flyIn {
+  0% { transform: translateY(-100px) scale(0); opacity: 0; }
+  50% { transform: translateY(0px) scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.badge.fly { display:inline-block !important; animation: flyIn 1s ease forwards; }
+
+/* Pink to orange animated background */
+.hidden-gems-bg {
+  background: linear-gradient(-45deg, #ff5f6d, #ffc371);
+  background-size: 400% 400%;
+  animation: gemsBG 12s ease infinite;
+}
+
+/* Rainbow background when record is beaten */
+.rainbow-mode {
+  background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet);
+  background-size: 600% 600%;
+  animation: rainbowBG 6s linear infinite;
+}
+
+@keyframes gemsBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes rainbowBG {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginBox" class="box" style="z-index:100;">
+<h2>Sign In with Google</h2>
+<p>Click the button to sign in:</p>
+<button onclick="simulateGoogleLogin()">Sign in with Google</button>
+</div>
+
+<!-- SOURCE -->
+<div id="sourceBox" class="box hidden" style="z-index:100;">
+<h2>How did you hear about this website?</h2>
+<select id="source">
+<option>School project</option>
+<option>Friend</option>
+<option>Social media</option>
+<option>Search engine</option>
+<option>Other</option>
+</select>
+<button onclick="finishLogin()">Continue</button>
+</div>
+
+<!-- Dark Mode Toggle -->
+<div class="nav-btns hidden" id="darkModeToggle">
+  <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+</div>
+
+<!-- HIDDEN GEMS PAGE -->
+<div id="hiddenGemsPage" class="hidden hidden-gems-bg">
+<h1>Hidden Gems in Jordan</h1>
+<div class="nav-btns">
+  <button onclick="showAbout()">Go to About Jordan</button>
+</div>
+
+<!-- Hidden Gems Sections -->
+<div id="places"></div>
+
+<!-- Mini Game with Leaderboard -->
+<div class="place">
+<h2>Mini Game: Collect the Gems!</h2>
+<p>Enter your name to start:</p>
+<input type="text" id="username" placeholder="Your Name">
+<button onclick="startGame()">Start Game</button>
+<p>Time left: <span id="gameTimer">10</span> seconds</p>
+<div id="miniGame"></div>
+<p>Score: <span id="gameScore">0</span></p>
+<h3>Leaderboard</h3>
+<div id="leaderboard"></div>
+
+<!-- Best This Month -->
+<div class="best-month-box">
+  <h3>🏆 Best This Month</h3>
+  <p id="bestMonthText">No record yet</p>
+</div>
+
+<!-- Achievements -->
+<div id="achievementsBox" class="box">
+  <h3>🏆 Achievements</h3>
+  <p id="miniGameProStatus">Mini Game Pro: Locked</p>
+  <span id="miniGameProBadge" class="badge" style="display:none;">💎</span>
+</div>
+
+</div>
+
+<!-- Rate Us -->
+<div class="place">
+<h2>Rate Us</h2>
+<textarea id="review" placeholder="Write your opinion..."></textarea>
+<button onclick="submitReview()">Submit</button>
+<p id="reviewMsg"></p>
+</div>
+
+<!-- Comments Wall -->
+<div class="place">
+<h2>Comments Wall</h2>
+<div id="commentsWall"></div>
+</div>
+
+<footer>Created by Essam Samer</footer>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="aboutPage" class="hidden">
+  <!-- Hero Section -->
+  <div class="section" style="background:#ffb703; color:#023e8a; padding:30px; border-radius:10px;">
+    <h1 style="font-size:32px;">Discover the Wonders of Jordan!</h1>
+    <p style="font-size:18px;">From ancient cities to stunning deserts, Jordan is full of hidden gems waiting to be explored. Let’s take a journey!</p>
+  </div>
+
+  <div class="nav-btns">
+    <button onclick="showHiddenGems()">Back to Hidden Gems</button>
+  </div>
+  <div class="decorative decorative1"></div>
+  <div class="decorative decorative2"></div>
+
+  <div class="section">
+    <h2>Is Jordan Safe?</h2>
+    <img src="https://images.pexels.com/photos/2070485/pexels-photo-2070485.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Jordan is very safe for tourists. You can explore cities, nature reserves, and deserts without worry.</p>
+    <p>Tourists often praise the welcoming and helpful locals, making their stay even more memorable.</p>
+  </div>
+
+  <div class="section">
+    <h2>Is Jordan Expensive?</h2>
+    <img src="https://images.pexels.com/photos/1670180/pexels-photo-1670180.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Eating local food is cheap, hotels and attractions can cost more.</p>
+    <p>By choosing local restaurants and public transportation, visitors can experience Jordan without spending a fortune.</p>
+  </div>
+
+  <div class="section">
+    <h2>Are the People Nice?</h2>
+    <img src="https://images.pexels.com/photos/16505141/pexels-photo-16505141.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Jordanian people are friendly and welcoming.</p>
+    <p>Visitors often share stories of locals going out of their way to help, making the trip unforgettable.</p>
+  </div>
+
+  <div class="section">
+    <h2>Beautiful Nature</h2>
+    <img src="https://images.pexels.com/photos/14017359/pexels-photo-14017359.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Jordan has green hills, Dana and Ajloun nature reserves, and great landscapes.</p>
+    <p>Hiking, bird-watching, and exploring the desert landscapes offer amazing photo opportunities and adventure.</p>
+  </div>
+
+  <div class="section">
+    <h2>Jordanian Food</h2>
+    <img src="https://images.pexels.com/photos/6646366/pexels-photo-6646366.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Mansaf is the national dish of Jordan, and food is an important part of culture.</p>
+    <p>Street food, sweets, and traditional meals give travelers a taste of Jordan’s rich culinary traditions.</p>
+  </div>
+
+  <div class="section">
+    <h2>History and Culture</h2>
+    <img src="https://images.pexels.com/photos/23124610/pexels-photo-23124610.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Jordan has Roman cities, old castles, and famous sites like Petra and Jerash.</p>
+    <p>Each site tells a story of ancient civilizations, making Jordan a fascinating destination for history lovers.</p>
+  </div>
+
+  <div class="section">
+    <h2>Location</h2>
+    <img src="https://images.pexels.com/photos/4388167/pexels-photo-4388167.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <p>Jordan is in the Middle East, near Palestine, Saudi Arabia, Iraq, and Syria.</p>
+    <p>Its central location makes it a perfect stop for travelers exploring the region.</p>
+  </div>
+
+  <footer>Created by Essam Samer</footer>
+</div>
+
+<script>
+// DARK MODE
+function toggleDarkMode(){ document.body.classList.toggle("dark-mode"); }
+
+// LOGIN
+function simulateGoogleLogin(){ 
+  alert("Signed in!"); 
+  document.getElementById("loginBox").classList.add("hidden"); 
+  document.getElementById("sourceBox").classList.remove("hidden"); 
+}
+function finishLogin(){ 
+  document.getElementById("sourceBox").classList.add("hidden"); 
+  document.getElementById("hiddenGemsPage").classList.remove("hidden"); 
+  document.getElementById("darkModeToggle").classList.remove("hidden"); 
+  startWaterfall(); 
+}
+
+// RATE US
+function submitReview(){
+  const review = document.getElementById("review").value;
+  if(review){ addComment(review); document.getElementById("reviewMsg").innerText="Thank you for your feedback!"; document.getElementById("review").value=""; }
+}
+
+// COMMENTS WALL
+function addComment(text){
+  const wall = document.getElementById("commentsWall");
+  const brick = document.createElement("div");
+  brick.className="commentBrick"; brick.innerText=text;
+  wall.appendChild(brick);
+}
+
+// WATERFALL GREETINGS
+const greetings = ["Hi","你好","مرحبا","ہیلو","नमस्ते","Bonjour","Hola","سلام","Salaam","வணக்கம்","Привет"];
+function spawnWaterfallPeople(){ 
+  const container = document.getElementById("hiddenGemsPage"); 
+  const person = document.createElement("div"); 
+  person.className = "person"; 
+  person.innerText = greetings[Math.floor(Math.random()*greetings.length)]; 
+  const side = Math.random() < 0.5 ? "left" : "right"; 
+  if(side==="left"){ person.style.left="20px"; person.style.animationName="fallLeft"; } 
+  else{ person.style.left="calc(100% - 70px)"; person.style.animationName="fallRight"; } 
+  person.style.animationDuration = 4 + Math.random()*4 + "s"; 
+  container.appendChild(person); 
+  setTimeout(()=>{ container.removeChild(person); }, 8000); 
+}
+function startWaterfall(){ setInterval(spawnWaterfallPeople, 800); }
+
+// BADGES
+function collectBadge(elem){ elem.classList.toggle("collected"); }
+
+// PAGE NAVIGATION
+function showAbout(){ document.getElementById("hiddenGemsPage").classList.add("hidden"); document.getElementById("aboutPage").classList.remove("hidden"); }
+function showHiddenGems(){ document.getElementById("aboutPage").classList.add("hidden"); document.getElementById("hiddenGemsPage").classList.remove("hidden"); }
+
+// HIDDEN GEMS
+const hiddenGems=[
+  {name:"Petra", bestTime:"Spring & Autumn", weather:"Warm days, cooler evenings", image:"https://images.pexels.com/photos/23124610/pexels-photo-23124610.jpeg?auto=compress&cs=tinysrgb&w=800"},
+  {name:"Wadi Rum", bestTime:"All year", weather:"Great for adventure", image:"https://images.pexels.com/photos/14247712/pexels-photo-14247712.jpeg?auto=compress&cs=tinysrgb&w=800"},
+  {name:"Dana Biosphere Reserve", bestTime:"Spring & Autumn", weather:"Mild & pleasant", image:"https://images.pexels.com/photos/14017359/pexels-photo-14017359.jpeg?auto=compress&cs=tinysrgb&w=800"},
+  {name:"Ajloun Forest Reserve", bestTime:"Spring", weather:"Cool & green", image:"https://images.pexels.com/photos/28086999/pexels-photo-28086999.jpeg?auto=compress&cs=tinysrgb&w=800"}
+];
+const placesDiv=document.getElementById("places");
+hiddenGems.forEach(place=>{
+  const div=document.createElement("div");
+  div.className="place";
+  div.innerHTML=`
+    <h2>${place.name} <span class="badge" onclick="collectBadge(this)">★</span></h2>
+    <p><strong>Best time:</strong> ${place.bestTime}</p>
+    <p><strong>Weather:</strong> ${place.weather}</p>
+    <img src="${place.image}">
+    <label>Passengers:</label><input type="number" value="1" min="1" class="num">
+    <label>Price per person (USD):</label><input type="number" value="480" class="price">
+    <button onclick="calc(this)">Calculate Cost</button>
+    <p class="result"></p>
+  `;
+  placesDiv.appendChild(div);
+});
+function calc(btn){
+  const box=btn.parentElement;
+  const n=box.querySelector(".num").value;
+  const p=box.querySelector(".price").value;
+  box.querySelector(".result").innerText="Estimated total: "+(n*p)+" USD";
+}
+
+// MINI GAME
+let gameScore = 0; let gameInterval; let countdownInterval; const leaderboardArr = [];
+let bestMonthScore = localStorage.getItem("bestMonthScore") || 0;
+let bestMonthUser = localStorage.getItem("bestMonthUser") || "";
+function updateBestMonthUI() {
+  if (bestMonthScore > 0) {
+    document.getElementById("bestMonthText").innerText =
+      bestMonthUser + " – " + bestMonthScore + " gems";
+  }
+}
+updateBestMonthUI();
+function checkMonthlyRecord(username, score) {
+  if (score > bestMonthScore) {
+    bestMonthScore = score;
+    bestMonthUser = username;
+    localStorage.setItem("bestMonthScore", score);
+    localStorage.setItem("bestMonthUser", username);
+    document.querySelector(".hidden-gems-bg").classList.add("rainbow-mode");
+  }
+}
+function checkMiniGamePro(score) {
+  const textElem = document.getElementById("miniGameProStatus");
+  const badgeElem = document.getElementById("miniGameProBadge");
+  if(score >= 10 && textElem.innerText.includes("Locked")) {
+    textElem.innerText = "Mini Game Pro: Unlocked! 🎉";
+    badgeElem.style.display="inline-block";
+    badgeElem.classList.add("fly");
+    document.querySelector(".hidden-gems-bg").classList.add("rainbow-mode");
+    alert("🎉 Congratulations! You unlocked the Mini Game Pro achievement!");
+  }
+}
+function endGame(username, finalScore) {
+  checkMonthlyRecord(username, finalScore);
+  checkMiniGamePro(finalScore);
+}
+function startGame(){
+    const username = document.getElementById("username").value || "Anonymous";
+    clearInterval(gameInterval);
+    clearInterval(countdownInterval);
+    gameScore = 0;
+    document.getElementById("gameScore").innerText = gameScore;
+    document.getElementById("gameTimer").innerText = 10;
+    const game = document.getElementById("miniGame");
+    game.innerHTML = "";
+    let timeLeft = 10;
+    countdownInterval = setInterval(()=>{
+        timeLeft--;
+        document.getElementById("gameTimer").innerText = timeLeft;
+        if(timeLeft <= 0){
+            clearInterval(countdownInterval);
+            clearInterval(gameInterval);
+            leaderboardArr.push({name: username, score: gameScore});
+            updateLeaderboard();
+            alert(username + "'s round ended with score: " + gameScore);
+            endGame(username, gameScore);
+            gameScore = 0;
+            document.getElementById("gameScore").innerText = gameScore;
+        }
+    },1000);
+    gameInterval = setInterval(()=>{
+        const gem = document.createElement("div");
+        gem.className="gemIcon"; gem.innerText="💎";
+        gem.style.top = Math.random()*260+"px";
+        gem.style.left = Math.random()*760+"px";
+        gem.onclick=function(){ gameScore++; document.getElementById("gameScore").innerText=gameScore; gem.remove(); }
+        game.appendChild(gem);
+        setTimeout(()=>{ gem.remove(); }, 3000);
+    },800);
+}
+function updateLeaderboard(){
+    const lbDiv = document.getElementById("leaderboard");
+    leaderboardArr.sort((a,b)=>b.score - a.score);
+    lbDiv.innerHTML = "";
+    leaderboardArr.forEach((entry,i)=>{
+        const div = document.createElement("div");
+        div.innerText = (i+1)+". "+entry.name+": "+entry.score;
+        lbDiv.appendChild(div);
+    });
+}
+</script>
+</body>
+</html>
